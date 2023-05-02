@@ -7,7 +7,8 @@ function onClick() {
 }
 
 function inputsAreEmpty() {
-    return (getX === '' || getN === '');
+    return (isNaN(getX()) || isNaN(getN()));
+    // return true;
 }
 
 function calculate(x, n) {
