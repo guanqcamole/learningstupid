@@ -1,38 +1,37 @@
-function printResult() {
-    let result = compareChoice(getComputerChoice(), getPlayerChoice());
-    if (result === 1) prompt('you win!');
-    if (result === 0) prompt('computer wins');
-}
-
 function compareChoice(computerChoice, playerChoice) {
     //0 is rock
     //1 is paper
     //2 is scissors
-    if (computerChoice === playerChoice) {prompt('it\'s a tie!!'); return;}
-    if (computerChoice === 0) {
-        if (playerChoice === 1) return 1; //you win
-        if (playerChoice === 2) return 0; //computer wins
+    let result = `, ${playerChoice} beats ${computerChoice}`;
+    if (computerChoice === playerChoice) return `It's a tie, you both chose ${computerChoice}`; //tie
+    if (computerChoice === 'rock') {
+        if (playerChoice === 'paper') return `You win${result}`; //you win
+        if (playerChoice === 'scissors') return `Computer wins${result}`; //computer wins
     }
-    if (computerChoice === 1) {
-        if (playerChoice === 2) return 1; //you win
-        if (playerChoice === 0) return 0; //computer wins
+    if (computerChoice === 'paper') {
+        if (playerChoice === 'scissors') return `You win${result}`; //you win
+        if (playerChoice === 'rock') return `Computer wins${result}`; //computer wins
     }
-    if (computerChoice === 2) {
-        if (playerChoice === 0) return 1; //you win
-        if (playerChoice === 1) return 0; //computer wins
+    if (computerChoice === 'scissors') {
+        if (playerChoice === 'rock') return `You win${result}`; //you win
+        if (playerChoice === 'paper') return `Computer wins${result}`; //computer wins
     }
 }
 
+//correct
 function getComputerChoice() {
-    return (Math.floor(Math.random()*3));
+    let choice = (Math.floor(Math.random()*3));
+    switch (choice) {
+        case (0): return 'rock';
+        case (1): return 'paper';
+        case (2): return 'scissors';
+    }
 }
 
-function getPlayerChoice() {
-    return (document.querySelector(".rock") 
-            || document.querySelector(".paper") 
-            || document.querySelector(".scissors"));
+let button = document.querySelectorAll('.playerChoice');
+for (i of button) {
+    i.addEventListener('click', function() {
+        document.querySelector('.msg').innerHTML = compareChoice(getComputerChoice(), this.innerHTML);
+    });
 }
-
-let button = getPlayerChoice();
-button.addEventListener('click', printResult);
 
