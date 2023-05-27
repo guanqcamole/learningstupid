@@ -7,6 +7,7 @@ const game = () => {
     
     let playerScore = 0;
     let computerScore = 0;
+    let countRounds = 0;
     const totalRounds = 10;
 
     const playGame = () => {
@@ -17,16 +18,15 @@ const game = () => {
 
                 computerPlays = computerChoice[computerPlays];
                 const roundResult = oneRound(playerPlays.value, computerPlays);
-                
-                countRounds++;
-                keepScore(roundResult, countRounds);
 
+                keepScore(roundResult);
+                gameOver();
             })
         })
-        let countRounds = 0;
     }
 
     const oneRound = (playerChoice, computerChoice) => {
+        countRounds++;
         const message = document.querySelector('.roundMsg');
         //tie
         if (computerChoice === playerChoice) {
@@ -72,7 +72,7 @@ const game = () => {
 
     }
 
-    const keepScore = (roundResult, countRounds) => {
+    const keepScore = (roundResult) => {
         if (roundResult === 0) {
             playerScore++;
             computerScore++;
@@ -83,13 +83,13 @@ const game = () => {
         if (roundResult === -1) {
             computerScore++;
         }
-
         const scoreMsg = document.querySelector('.scores');
         scoreMsg.innerHTML = `Player Score: ${playerScore} <br/>
                             Computer Score: ${computerScore}`;
+    }
 
+    const gameOver = () => {
         const endMsg = document.querySelector('.gameMsg');
-
         if (countRounds < totalRounds) {
             endMsg.innerHTML = `Round ${countRounds}`;
         }
@@ -105,24 +105,24 @@ const game = () => {
                     return `computer(${computerScore}) beats player(${playerScore})`;
                 }
             }
-            endMsg.innerHTML = `Game is over, ${winner()}`;
-
-            restart();
+            endMsg.innerHTML = `Round ${countRounds}, Game Over!
+                                <br/> ${winner()}`;
         }
+        restart();
     }
 
     const restart = () => {
         const restartBtn = document.querySelector('.restart');
         restartBtn.style.display = 'block';
         restartBtn.addEventListener('click', () => {
-            playerScore = 0;
-            computerScore = 0;
-            //problem with restart btn, does not reset game
-            //specifically in countGames
-            //also make it go hidden after new game starts
+            // playerScore = 0;
+            // computerScore = 0;
+            // countRounds = 0;
+            // restartBtn.style.display = 'none';
+            location.reload();
+
         })
     }
-
     playGame();
 }
 
