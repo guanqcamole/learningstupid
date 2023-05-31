@@ -107,6 +107,8 @@ const game = () => {
             }
             endMsg.innerHTML = `Round ${countRounds}, Game Over!
                                 <br/> ${winner()}`;
+            const playerChoiceBtns = document.querySelector('.playerChoiceRps');
+            playerChoiceBtns.style.display = 'none';
         }
         restart();
     }
